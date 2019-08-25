@@ -1,0 +1,26 @@
+def remote = [:]
+remote.name = "ubuntu"
+remote.allowAnyHosts = true
+remote.host = "3.15.185.73"
+def ID
+def IP
+node{
+    withCredentials([sshUserPrivateKey(credentialsId: 'a33a4edd-b8e5-4d88-966f-c9d6bdc62462', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+        remote.user = userName
+        remote.identityFile = identity
+        withCredentials(
+        [[
+            $class: 'AmazonWebServicesCredentialsBinding',
+            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+            credentialsId: '5098e1ce-b691-424f-b90b-254fa295052b',  // ID of credentials in kubernetes
+            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+        ]]) {
+            stage("test"){
+          sh ' kubectl describe service my-app'    
+          sh 'kubectl get deployment'
+          sh 'kubectl get hpa'
+          sh 'kubectl get pods'
+            }
+        }  
+    }
+}
