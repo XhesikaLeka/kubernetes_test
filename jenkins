@@ -1,6 +1,6 @@
 def remote = [:]
 remote.name = "ubuntu"
-remote.host = "3.17.37.229"
+remote.host = "18.216.201.83"
 def ID
 def IP
 remote.allowAnyHosts = true
@@ -11,7 +11,7 @@ node {
         [[
             $class: 'AmazonWebServicesCredentialsBinding',
             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-            credentialsId: '7b78d5bd-2b73-4479-a5e9-2ebea07b854b',  // ID of credentials in Jenkins
+            credentialsId: '87ee093d-15bc-4dff-b208-8812c9d072ad',  // ID of credentials in Jenkins
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
         stage("create EC2 instance"){
@@ -24,7 +24,7 @@ node {
 
 
     
-   withCredentials([sshUserPrivateKey(credentialsId: 'c69943b1-98d7-461a-a784-000af6e0fb79', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+   withCredentials([sshUserPrivateKey(credentialsId: '08ca0745-000c-47db-96f7-b66af95a4d82', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
       remote.user = userName
       remote.identityFile = identity
       stage("Install Amazon Cli") {
@@ -45,7 +45,7 @@ node {
         [[
             $class: 'AmazonWebServicesCredentialsBinding',
             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-            credentialsId: 'd5802efe-df9d-472b-9c4e-4c92709071bd',  
+            credentialsId: '4017ebef-b0f1-41a0-911e-7aad1b2e1df6',  
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
             stage("create s3 bucket"){
