@@ -18,6 +18,7 @@ node {
             ID = sh (script: 'aws ec2 run-instances --image-id ami-0f93b5fd8f220e428 --count 1 --instance-type t2.micro --key-name xhesika --security-group-ids sg-ce0d10ae --subnet-id subnet-05eaa77f --region us-east-2 --query \'Instances[0].InstanceId\'',returnStdout: true)
         }
         stage("get the EC2 external ip"){
+             sh 'aws configure set region us-east-2'
             remote.host = sh (script: "aws ec2 describe-instances --query \'Reservations[0].Instances[0].PublicIpAddress\' --instance-ids $ID",returnStdout: true)
         }
     }
@@ -45,7 +46,7 @@ node {
         [[
             $class: 'AmazonWebServicesCredentialsBinding',
             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-            credentialsId: '4017ebef-b0f1-41a0-911e-7aad1b2e1df6',  
+            credentialsId: 'ab12ed46-b95a-4f8c-8a60-ea43e356f392',  
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
             stage("create s3 bucket"){
